@@ -3,15 +3,29 @@
 
 from abc import ABCMeta, abstractmethod
 
-class Template_de_imposto_condicional(object):
+class Imposto(object):
+
+    def __init__(self, outro_imposto = None):
+        self.__outro_imposto = outro_imposto
+
+    def calculo_do_outro_imposto(self, orcamento):
+		if self.__outro_imposto is None:
+			return 0
+
+		return self.__outro_imposto.calcula(orcamento)
+
+    def calcula(self, orcamento):
+        pass
+
+class Template_de_imposto_condicional(Imposto):
 
     __metaclass__ = ABCMeta
 
     def calcula(self, orcamento):
 		if self.deve_usar_max_taxacao(orcamento):
-			return self.max_taxacao(orcamento)
+			return self.max_taxacao(orcamento) + self.calculo_do_outro_imposto(orcamento)
 		else:
-			return self.min_taxacao(orcamento)
+			return self.min_taxacao(orcamento) + self.calculo_do_outro_imposto(orcamento)
     @abstractmethod
     def deve_usar_max_taxacao(self, orcamento):
 		pass
@@ -22,23 +36,26 @@ class Template_de_imposto_condicional(object):
     def min_taxacao(self, orcamento):
 		pass
 
-#estratégia para calcular ISS
-class ISS(object):
+def IPVO(metodo_ou_funcao):
+	def wrapper(self, orcamento):
+		return metodo_ou_funcao(self, orcamento) + 50.0
+	return wrapper
 
-	def calcula(self, orcamento):
-		return orcamento.valor * 0.1
+#estratégia para calcular ISS
+class ISS(Imposto):
+    @IPVO
+    def calcula(self, orcamento):
+		return orcamento.valor * 0.1 + self.calculo_do_outro_imposto(orcamento)
 
 #estratégia para calcular ICMS
-class ICMS(object):
-
+class ICMS(Imposto):
 	def calcula(self, orcamento):
-		return orcamento.valor * 0.06
+		return orcamento.valor * 0.06 + self.calculo_do_outro_imposto(orcamento)
 
 #estratégia para calcular IPTU
-class IPTU(object):
-
+class IPTU(Imposto):
 	def calcula(self, orcamento):
-		return orcamento.valor * 0.15
+		return orcamento.valor * 0.15 + self.calculo_do_outro_imposto(orcamento)
 
 #estratégia para calcular ICAA
 class ICAA(Template_de_imposto_condicional):

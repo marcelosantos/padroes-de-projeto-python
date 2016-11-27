@@ -33,10 +33,18 @@ if __name__ == '__main__':
 
     calculador.realiza_calculo(orcamento, ICMS())
 
-    calculador.realiza_calculo(orcamento, IPTU())
+    print 'ISS com ICMS'
+
+    calculador.realiza_calculo(orcamento, ISS( ICMS() ))
+
+    #calculador.realiza_calculo(orcamento, IPTU())
 
     print 'ICAA / ICBB'
 
     calculador.realiza_calculo(orcamento, ICAA())
 
     calculador.realiza_calculo(orcamento, ICBB())
+
+    print 'ICAA com ICBB'
+
+    calculador.realiza_calculo(orcamento, ICAA( ICBB() ))
