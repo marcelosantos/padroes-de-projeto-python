@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #author Marcelo Santos
 
-from impostos import ISS, ICMS, IPTU
+from impostos import ISS, ICMS, IPTU, ICAA, ICBB
 
 class Calculador_de_impostos(object):
 
@@ -15,15 +15,28 @@ class Calculador_de_impostos(object):
         print imposto_calculado
 
 if __name__ == '__main__':
+    from orcamento import Orcamento, Item
 
-	from orcamento import Orcamento
+    calculador = Calculador_de_impostos()
 
-	calculador = Calculador_de_impostos()
+    orcamento = Orcamento()
+    orcamento.adiciona_item(Item('TENIS',200.0))
+    orcamento.adiciona_item(Item('BLUSAO',300.0))
+    orcamento.adiciona_item(Item('BIKE',1500.0))
+    #orcamento.adiciona_item(Item('LUVAS',70.0))
+    #orcamento.adiciona_item(Item('BLUSA',30.0))
+    #orcamento.adiciona_item(Item('CUECA',15.0))
 
-	orcamento = Orcamento(600)
+    print 'ISS / ICMS / IPTU'
 
-	calculador.realiza_calculo(orcamento, ISS())
+    calculador.realiza_calculo(orcamento, ISS())
 
-	calculador.realiza_calculo(orcamento, ICMS())
+    calculador.realiza_calculo(orcamento, ICMS())
 
-	calculador.realiza_calculo(orcamento, IPTU())
+    calculador.realiza_calculo(orcamento, IPTU())
+
+    print 'ICAA / ICBB'
+
+    calculador.realiza_calculo(orcamento, ICAA())
+
+    calculador.realiza_calculo(orcamento, ICBB())

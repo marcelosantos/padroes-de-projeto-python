@@ -22,11 +22,10 @@ if __name__ == '__main__':
 	from orcamento import Orcamento, Item
 
 	orcamento = Orcamento()
-
 	orcamento.adiciona_item(Item('TENIS',150.0))
-	orcamento.adiciona_item(Item('BLUSAO',100.0))
+	orcamento.adiciona_item(Item('BLUSAO',180.0))
 	orcamento.adiciona_item(Item('BIKE',1500.0))
-	#orcamento.adiciona_item(Item('LUVAS',70.0))
+	orcamento.adiciona_item(Item('LUVAS',70.0))
 	#orcamento.adiciona_item(Item('BLUSA',30.0))
 	#orcamento.adiciona_item(Item('CUECA',15.0))
 
